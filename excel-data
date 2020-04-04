@@ -1,0 +1,21 @@
+$filename=Get-Date -Format "yyyy-MM-dd"
+$fileroot=Test-Path C:\Users\xyc\Desktop\$filename.xlsx
+if ($fileroot -eq $true){
+    $xl=New-Object -ComObject excel.application
+    $xl.visible=$Fasle
+    $xl.displayAlerts=$Fasle
+    $wb=$xl.workbooks.open("C:\Users\xyc\Desktop\$filename.xlsx")
+    $sheet=$wb.sheets.item(1)
+    $i=$sheet.range("A1:A13")
+    $object=
+    for($i=1;$i -lt $sheet.range("A65536").end(-4162).row;$i++)
+    {
+        Write-Host $sheet.range("A$i").text
+    }
+#foreach($id in $i){
+#    print $id.text
+#}
+    $xl.Quit()
+    Stop-Process -Name excel
+}
+else{echo "The file does not exist!"}
